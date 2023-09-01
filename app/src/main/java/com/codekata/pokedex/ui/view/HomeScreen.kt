@@ -12,11 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import com.codekata.pokedex.ui.theme.PokedexTheme
 import com.codekata.pokedex.ui.widgets.SectionItemList
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(viewModel: ViewModel) {
+    val state = viewModel.state.collectLifecycle()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,7 +44,10 @@ fun HomeScreen() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        SectionItemList()
+        SectionItemList("Pokebola", Modifier) {
+            navHost.navigate()
+            viewModel.registrarEvento()
+        }
 
     }
 }
